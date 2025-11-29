@@ -31,7 +31,6 @@ const surnames = [
     "Tichý", "Vacek", "Havlíček", "Ptáček", "Hruška"
 ];
 
-//Funkce pro githubové testy
 export function main(dtoIn) {
 
     // Výsledek, do kterého zadáme zaměstnance
@@ -72,20 +71,27 @@ for (let i = 0; i < dtoIn.count; i++) {
     const workloads = [10, 20, 30, 40];
     const workload = workloads[randomInt(0, workloads.length - 1)];
 
+    // Vytvoření náhodného data narození v daném věkovém rozmezí
     const now = new Date();
+    const currentYear = now.getUTCFullYear();
 
-    // vygenerujeme náhodný věk v intervalu <min, max>
-    const randomAge = randomInt(dtoIn.age.min, dtoIn.age.max);
+    // Výpočet možných let narození
+    const minBirthYear = currentYear - dtoIn.age.max;
+    const maxBirthYear = currentYear - dtoIn.age.min;
 
-    // spočítáme rok narození (dnes - randomAge let)
-    const birthYear = now.getUTCFullYear() - randomAge;
+   // Náhodný věk v rozmezí (min, max)
+    const age = randomInt(dtoIn.age.min, dtoIn.age.max);
 
-    // a nastavíme datum narození na dnešní měsíc a den
+    // Datum narození = dnešní datum – age let
+    const now = new Date();
+    const birthYear = now.getUTCFullYear() - age;
+
+    // zachováme dnešní měsíc a den, aby věk nepřeskočil max
     const birthdate = new Date(Date.UTC(
-    birthYear,
-    now.getUTCMonth(),
-    now.getUTCDate(),
-    0, 0, 0, 0
+        birthYear,
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        0, 0, 0, 0
     )).toISOString();
 
 
