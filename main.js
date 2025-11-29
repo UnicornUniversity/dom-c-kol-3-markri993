@@ -33,10 +33,10 @@ const surnames = [
 ];
 
 // Hlavní funkce úkolu. Přijímá vstupní objekt dtoIn a vrací pole generovaných zaměstnanců.
-// Funkce je exportovaná kvůli automatickým testům na GitHubu.
+// Funkce esport pro automatické testy na GitHubu.
 export function main(dtoIn) {
 
-  // Výstupní seznam zaměstnanců, do kterého budu ukládat vytvořené objekty.
+  // Výstupní seznam zaměstnanců, do kterého se vkládají vytvořené objekty.
   const dtoOut = [];
 
   // Základní validace vstupu – kontrola, zda vůbec nějaký vstup existuje.
@@ -61,28 +61,28 @@ export function main(dtoIn) {
     // Náhodný výběr pohlaví.
     const gender = Math.random() < 0.5 ? "male" : "female";
 
-    // Náhodné jméno a příjmení z předpřipravených seznamů.
+    // Náhodné jméno a příjmení z předpřipravených seznamů výše.
     const name = names[randomInt(0, names.length - 1)];
     const surname = surnames[randomInt(0, surnames.length - 1)];
 
-    // Náhodně zvolený pracovní úvazek v procentech.
+    // Náhodně zvolený pracovní úvazek.
     const workloads = [10, 20, 30, 40];
     const workload = workloads[randomInt(0, workloads.length - 1)];
 
     // Aktuální datum použité k výpočtu náhodného věku.
     const now = new Date();
 
-    // Náhodně zvolený věk v zadaném rozsahu <min, max>.
+    // Náhodně zvolený věk v zadaném rozsahu (min, max).
     const age = randomInt(dtoIn.age.min, dtoIn.age.max);
 
     // Vytvoření základního data narození – odečte se celý počet let.
     const birth = new Date(now);
     birth.setUTCFullYear(now.getUTCFullYear() - age);
 
-    // Aby měl každý zaměstnanec unikátní datum narození až do milisekundy,
-    // posunu datum o malý počet milisekund směrem dozadu.
-    // Posun je velmi malý, takže nemění skutečný věk mimo toleranci,
-    // ale zaručí jedinečnost pro automatické testy.
+    /*Aby měl každý zaměstnanec unikátní datum narození až do milisekundy,
+    posunu datum o malý počet milisekund směrem dozadu.
+    Posun je velmi malý, takže nemění skutečný věk mimo toleranci,
+    ale zaručí jedinečnost pro automatické testy.*/
     birth.setTime(birth.getTime() - (i + 1));
 
     // Převedení data narození do ISO formátu.
