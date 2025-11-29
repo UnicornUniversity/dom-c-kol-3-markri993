@@ -68,8 +68,9 @@ export function main(dtoIn) {
     const birth = new Date(now);
     birth.setUTCFullYear(now.getUTCFullYear() - age);
 
-    // Zajištěná unikátnost narozenin
-    birth.setTime(birth.getTime() - i);
+    // posun zajistí unikátnost, ale je dost malý na to, aby nezměnil věk
+    birth.setUTCMilliseconds(birth.getUTCMilliseconds() + i + randomInt(1, 10));
+
 
     const birthdate = birth.toISOString();
 
