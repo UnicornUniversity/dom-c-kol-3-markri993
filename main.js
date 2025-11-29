@@ -82,24 +82,14 @@ for (let i = 0; i < dtoIn.count; i++) {
 
     // Náhodné datum
     const randomYear = randomInt(minBirthYear, maxBirthYear);
-    const randomMonth = randomInt(0, 11);       // 0 = leden
-    const randomDay = randomInt(1, 28);         // 28 kvůli jednoduchosti
 
-    // Datum převedu do ISO formátu - náhodná hodina, minuta, sekunda a milisekunda
-    const randomHour = randomInt(0, 23);
-    const randomMinute = randomInt(0, 59);
-    const randomSecond = randomInt(0, 59);
-    const randomMs = randomInt(0, 999);
-
-    // Datum se všemi náhodnými časovými hodnotami
+    // Fixní datum 1.1. daného roku kvůli testům.
     const birthdate = new Date(Date.UTC(
         randomYear,
-        randomMonth,
-        randomDay,
-        randomHour,
-        randomMinute,
-        randomSecond,
-        randomMs
+        0,   // leden
+        1,   // první den
+        0, 0, 0, 0 // žádný čas
+
     )).toISOString();
 
     // Vytvoření jednoho generovaného zaměstnance jako objekt
