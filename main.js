@@ -1,14 +1,122 @@
-//TODO add imports if needed
-//TODO doc
-/**
- * The main function which calls the application. 
- * Please, add specific description here for the application purpose.
- * @param {object} dtoIn contains count of employees, age limit of employees {min, max}
- * @returns {Array} of employees
- */
-export function main(dtoIn) {
-  //TODO code
-  //let dtoOut = exMain(dtoIn);
-  return dtoOut;
+// Pomocná funkce na náhodné celé číslo
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// Seznam křestních jmen pro výběr
+const names = [
+    "Jan", "Petr", "Lukáš", "Jiří", "Tomáš",
+    "Martin", "Jakub", "Marek", "Ondřej", "Karel",
+    "Václav", "Roman", "Daniel", "Michal", "Josef",
+    "Filip", "Radek", "Zdeněk", "Adam", "David",
+    "Jaroslav", "Aleš", "Stanislav", "Dominik", "Erik",
+    "Štěpán", "Matěj", "Richard", "Patrik", "Robert",
+    "Hana", "Lucie", "Eva", "Petra", "Tereza",
+    "Jana", "Kristýna", "Kateřina", "Barbora", "Adéla",
+    "Alena", "Veronika", "Eliška", "Markéta", "Magdaléna",
+    "Natálie", "Denisa", "Karolína", "Nikola", "Sabina"
+];
+
+// Seznam příjmení pro výběr
+const surnames = [
+    "Novák", "Svoboda", "Dvořák", "Černý", "Procházka",
+    "Kuřil", "Pokorný", "Veselý", "Krejčí", "Horák",
+    "Němec", "Malý", "Urban", "Beneš", "Kučera",
+    "Říha", "Vaněk", "Král", "Fiala", "Sedláček",
+    "Kolář", "Růžička", "Bartoš", "Martínek", "Kadlec",
+    "Bláha", "Šimek", "Vlček", "Musil", "Šťastný",
+    "Ševčík", "Kříž", "Doležal", "Mach", "Holub",
+    "Zeman", "Tomek", "Pavlík", "Straka", "Kopecký",
+    "Pospíšil", "Mašek", "Hájek", "Pavelka", "Sýkora",
+    "Tichý", "Vacek", "Havlíček", "Ptáček", "Hruška"
+];
+
+//Funkce pro githubové testy
+export { main };
+
+// Základní kontrola vstupu. Program je sice náhodným generátorem z již předpřipravených dat výše, ale pro úplnost kontrolu ponecháme.
+function main(dtoIn) {
+
+    // Výsledek, do kterého zadáme zaměstnance
+    const dtoOut = [];
+
+    // Validace vstupu - kontrola správnosti zadávaných dat
+    if (!dtoIn) {
+        // Návrat prázdného pole při chybě.
+        return dtoOut;
+    }
+
+    // Kontrola počtu zaměstnanců
+    if (typeof dtoIn.count !== "number" || dtoIn.count < 1) {
+        // Při zadání čísla menší než 1 program vrátí prázdný výsledek.
+        return dtoOut;
+    }
+
+    // Kontrola věku zaměstnanců (min a max věk musí být čísla). 
+    if (!dtoIn.age || typeof dtoIn.age.min !== "number" || typeof dtoIn.age.max !== "number") {
+        //Při zadání nesprávného věku program rovněž nebude nic generovat.
+        return dtoOut;
+    }
+
+for (let i = 0; i < dtoIn.count; i++) {
+
+    // Náhodný výběr pohlaví
+    const gender = Math.random() < 0.5 ? "male" : "female";
+
+    // Náhodné jméno z připraveného seznamu
+    const randomNameIndex = randomInt(0, names.length - 1);
+    const name = names[randomNameIndex];
+
+    // Náhodné příjmení z připraveného seznamu
+    const randomSurnameIndex = randomInt(0, surnames.length - 1);
+    const surname = surnames[randomSurnameIndex];
+
+    // Náhodný pracovní úvazek
+    const workloads = [10, 20, 30, 40];
+    const workload = workloads[randomInt(0, workloads.length - 1)];
+
+    // Vytvoření náhodného data narození v daném věkovém rozmezí
+    const now = new Date();
+    const currentYear = now.getUTCFullYear();
+
+    // Výpočet možných let narození
+    const minBirthYear = currentYear - dtoIn.age.max;
+    const maxBirthYear = currentYear - dtoIn.age.min;
+
+    // Náhodné datum
+    const randomYear = randomInt(minBirthYear, maxBirthYear);
+    const randomMonth = randomInt(0, 11);       // 0 = leden
+    const randomDay = randomInt(1, 28);         // 28 kvůli jednoduchosti
+
+    // Datum převedu do ISO formátu - náhodná hodina, minuta, sekunda a milisekunda
+    const randomHour = randomInt(0, 23);
+    const randomMinute = randomInt(0, 59);
+    const randomSecond = randomInt(0, 59);
+    const randomMs = randomInt(0, 999);
+
+    // Datum se všemi náhodnými časovými hodnotami
+    const birthdate = new Date(Date.UTC(
+        randomYear,
+        randomMonth,
+        randomDay,
+        randomHour,
+        randomMinute,
+        randomSecond,
+        randomMs
+    )).toISOString();
+
+    // Vytvoření jednoho generovaného zaměstnance jako objekt
+    const employee = {
+        gender: gender,
+        birthdate: birthdate,
+        name: name,
+        surname: surname,
+        workload: workload
+    };
+
+    // Přidání zaměstnance do výsledného pole
+    dtoOut.push(employee);
+}
+
+return dtoOut;
+}
