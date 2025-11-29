@@ -72,25 +72,22 @@ for (let i = 0; i < dtoIn.count; i++) {
     const workloads = [10, 20, 30, 40];
     const workload = workloads[randomInt(0, workloads.length - 1)];
 
-    // Vytvoření náhodného data narození v daném věkovém rozmezí
     const now = new Date();
-    const currentYear = now.getUTCFullYear();
 
-    // Výpočet možných let narození
-    const minBirthYear = currentYear - dtoIn.age.max;
-    const maxBirthYear = currentYear - dtoIn.age.min;
+    // vygenerujeme náhodný věk v intervalu <min, max>
+    const randomAge = randomInt(dtoIn.age.min, dtoIn.age.max);
 
-    // Náhodné datum
-    const randomYear = randomInt(minBirthYear, maxBirthYear);
+    // spočítáme rok narození (dnes - randomAge let)
+    const birthYear = now.getUTCFullYear() - randomAge;
 
-    // Fixní datum 1.1. daného roku kvůli testům.
+    // a nastavíme datum narození na dnešní měsíc a den
     const birthdate = new Date(Date.UTC(
-        randomYear,
-        0,   // leden
-        1,   // první den
-        0, 0, 0, 0 // žádný čas
-
+    birthYear,
+    now.getUTCMonth(),
+    now.getUTCDate(),
+    0, 0, 0, 0
     )).toISOString();
+
 
     // Vytvoření jednoho generovaného zaměstnance jako objekt
     const employee = {
