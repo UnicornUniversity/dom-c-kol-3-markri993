@@ -74,15 +74,15 @@ for (let i = 0; i < dtoIn.count; i++) {
     // Vytvoření náhodného data narození v daném věkovém rozmezí
     const now = new Date();
 
-   // náhodný věk v rozmezí <min, max>
+   // Náhodný věk v rozmezí <min, max>
     const age = randomInt(dtoIn.age.min, dtoIn.age.max);
 
-    // základní datum = dnešní datum mínus age let
+    // Základní datum = dnešní datum mínus age let
     const birth = new Date(now);
     birth.setUTCFullYear(now.getUTCFullYear() - age);
 
-    // náhodný posun o 0–30 dní, aby měli lidé různé narozeniny
-    const randomOffsetDays = randomInt(0, 30);
+    // Unikátní datum narození pro každého
+    const randomOffsetDays = randomInt(0, 30) + i;
     birth.setUTCDate(birth.getUTCDate() - randomOffsetDays);
 
     const birthdate = birth.toISOString();
