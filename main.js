@@ -85,7 +85,7 @@ for (let i = 0; i < dtoIn.count; i++) {
 
     // Náhodné datum
     const randomYear = randomInt(minBirthYear, maxBirthYear);
-    const randomMonth = randomInt(0, 11);       // 0 = leden
+    const randomMonth = randomInt(0, 11);       // 0 = leden. Počítáme od nuly.
     const randomDay = randomInt(1, 28);         // 28 kvůli jednoduchosti
 
     // Datum převedu do ISO formátu - náhodná hodina, minuta, sekunda a milisekunda
@@ -120,3 +120,4 @@ for (let i = 0; i < dtoIn.count; i++) {
 
 return dtoOut;
 }
+
