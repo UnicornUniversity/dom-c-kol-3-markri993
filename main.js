@@ -74,25 +74,19 @@ for (let i = 0; i < dtoIn.count; i++) {
     // Vytvoření náhodného data narození v daném věkovém rozmezí
     const now = new Date();
 
-   // Náhodný věk v rozmezí <min, max>
+   // náhodný věk v rozmezí <min, max>
     const age = randomInt(dtoIn.age.min, dtoIn.age.max);
 
-    // Datum narození s náhodným měsícem, dnem i časem
-    const birthYear = now.getUTCFullYear() - age;
+    // základní datum = dnešní datum mínus age let
+    const birth = new Date(now);
+    birth.setUTCFullYear(now.getUTCFullYear() - age);
 
-    const birthdate = new Date(Date.UTC(
-        birthYear,
-        randomInt(0, 11),     // náhodný měsíc
-        randomInt(1, 28),     // bezpečný náhodný den
-        randomInt(0, 23),     // hodina
-        randomInt(0, 59),     // minuta
-        randomInt(0, 59),     // sekunda
-        randomInt(0, 999)     // milisekunda
-    )).toISOString();
+    // náhodný posun o 0–30 dní, aby měli lidé různé narozeniny
+    const randomOffsetDays = randomInt(0, 30);
+    birth.setUTCDate(birth.getUTCDate() - randomOffsetDays);
 
-
-
-
+    const birthdate = birth.toISOString();
+    
     // Vytvoření jednoho generovaného zaměstnance jako objekt
     const employee = {
         gender: gender,
