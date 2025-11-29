@@ -77,16 +77,19 @@ for (let i = 0; i < dtoIn.count; i++) {
    // Náhodný věk v rozmezí <min, max>
     const age = randomInt(dtoIn.age.min, dtoIn.age.max);
 
-    // Datum narození = dnešní datum – age let
+    // Datum narození s náhodným měsícem, dnem i časem
     const birthYear = now.getUTCFullYear() - age;
 
-    // Datum narození se stejným měsícem a dnem jako dnes
     const birthdate = new Date(Date.UTC(
         birthYear,
-        now.getUTCMonth(),
-        now.getUTCDate(),
-        0, 0, 0, 0
+        randomInt(0, 11),     // náhodný měsíc
+        randomInt(1, 28),     // bezpečný náhodný den
+        randomInt(0, 23),     // hodina
+        randomInt(0, 59),     // minuta
+        randomInt(0, 59),     // sekunda
+        randomInt(0, 999)     // milisekunda
     )).toISOString();
+
 
 
 
